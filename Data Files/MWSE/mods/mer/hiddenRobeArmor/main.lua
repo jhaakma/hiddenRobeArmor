@@ -33,19 +33,12 @@ local function getIsBlocked(obj)
 end
 
 
-local function manualUpdate()
-    if tes3.player and not tes3.player.data.equipmentUpdated then
+local function manualUpdate(e)
+    if tes3.player == e.reference then
         tes3.player:updateEquipment()
-        tes3.player.data.equipmentUpdated = true
-        timer.delayOneFrame(function()
-            tes3.player.data.equipmentUpdated = nil
-        end)
     end
 end
---event.register("equipped", manualUpdate)
---event.register("unequipped", manualUpdate)
 event.register("loaded", manualUpdate)
-
 
 local function onBodyPartAssigned(e)
     if config.enabled ~= true then return end
